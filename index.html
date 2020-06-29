@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.sound.min.js"></script>
+
+        <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-database.js"></script>
+
+        <script>
+            // Your web app's Firebase configuration
+            let firebaseConfig = {
+                apiKey: "AIzaSyByYd6irbv3QIdr22LRLTNTXIM4z2CU_gM",
+                authDomain: "horizontal-hurdles-game-102006.firebaseapp.com",
+                databaseURL: "https://horizontal-hurdles-game-102006.firebaseio.com",
+                projectId: "horizontal-hurdles-game-102006",
+                storageBucket: "horizontal-hurdles-game-102006.appspot.com",
+                messagingSenderId: "575266486785",
+                appId: "1:575266486785:web:ccfddbe24ec30efe8f5e00"
+            };
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+        </script>
+    </head>
+    <body>
+        <script src="js/form.js"></script>
+        <script src="js/player.js"></script>
+        <script src="js/game.js"></script>
+        <script src="sketch.js"></script>
+    </body>
+</html>
