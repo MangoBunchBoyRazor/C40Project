@@ -25,15 +25,12 @@ class Form{
         this.btn.position(width/2+15,235);
         this.btn.mouseClicked(()=>{
             this.removeElements();
-            if(playerCount <= 4){
+            if(playerCount < 4){
                 player.updatePlayerCount(playerCount+1);
                 player.index = playerCount;
                 player.updatePlayerInfo();
                 if(playerCount == 4)
                     game.updateGameState(1);
-            }
-            else{
-                alert("Maximum players reached. Try after sometime.");
             }
             return null;
         });
