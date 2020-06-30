@@ -3,14 +3,17 @@ class Game{
         this.canvas = createCanvas(windowWidth-16,windowHeight-20);
         this.gamestate;
 
-
-        database.ref('gameState').on('value',(data)=>{this.gamestate = data.val();},showError);
+        database.ref('gameState').on('value',(data)=>this.gamestate = data.val(),showError);
     }
     update(){
-        this.canvas.background(0);
+        this.canvas.background(255);
+        if(this.gamestate == 1){
+            player.play();
+        }
     }
-}
-function windowResized(){
-    resizeCanvas(windowWidth-16,windowHeight-20);
-    form.title.position(width/2-92.865,50);
+    updateGameState(state){
+        database.ref('/').update({
+            gamestate: state
+        });
+    }
 }

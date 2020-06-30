@@ -1,7 +1,0 @@
-@font-face {
-    font-family: gameFont;
-    src: url( https://krunker.io/css/fonts/font2.ttf);
-}
-h2 {
-    font-family: gameFont;
-}
