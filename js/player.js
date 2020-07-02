@@ -1,91 +1,77 @@
+//Player class definition to handle the user playing
 class Player {
     constructor() {
-        this.index = null;
-        this.distance = 0;
-        this.name = form.nameInput.value();
-        this.playerData;
-        this.players = [
-            createSprite(0, 0, 50, 50),
-            createSprite(0, 0, 50, 50),
-            createSprite(0, 0, 50, 50),
-            createSprite(0, 0, 50, 50),
-        ];
-        this.obsGrp = createGroup();
-        this.grndGrp = createGroup();
-
-        for (let i = 0; i < this.players.length; i++) {
-            for (let j = 150; j < MAXDIST; j += 250)
-                this.obsGrp.add(createSprite(j, (height / 4) * i + 75, 30, 40));
-
-            let s = createSprite(0, (height / 4) * i + 110, MAXDIST*2, 40);
-                s.immovable = true;
-                this.grndGrp.add(s);
-        }
-
-        database.ref('playerCount').on('value', (data) => playerCount = data.val(), showError);
-        database.ref('players').on('value', (data) => this.playerData = data.val(), showError);
-
+        this.index = null;  //Player index. Used to refer to the current player
+        this.character = 0; //Player character. Used to determine the animation of the player
+        this.distance = 0;  //Player distance. Used to determine whether a player has won or not
+        this.name = form.nameInput.value(); //Name of the player
+        this.players = [];  //Array to hold all the player sprites for rendering
+        this.obsGrp = createGroup();    //Obstacle group
+        this.grndGrp = createGroup();   //Ground group
+        //Images array
         this.images = [
-            loadImage("finishline-1.png")
+            loadImage("finishline-1.png"),
+            loadImage("obstacleimg.png")
         ];
     }
     play() {
-        camera.position.x = this.playerData["player" + this.index].distance;
-        this.distance += this.players[this.index - 1].velocityX;
-        this.updatePlayerInfo();
+        camera.position.x = playerData["player" + this.index].distance; //Focusing the camera to the current players distance
 
+        this.distance += this.players[this.index - 1].velocityX; //Updating distance as per velocity
+        this.updatePlayerInfo();    //Updating new distance to database
+
+        //Main for loop to iterate to each player
         for (let i = 0; i < this.players.length; i++) {
-            if (this.players[i].y == 0)
-                this.players[i].y = (height / 4) * i + 70;
-            this.players[i].x = this.playerData["player" + (i + 1)].distance;
+            this.players[i].x = playerData["player" + (i + 1)].distance; //Rendering each player at their respective distance
 
-            this.grndGrp[i].position.y = (height / 4) * i + 110;
+            this.grndGrp[i].position.y = (height / 4) * i + 110; //Setting the ground position else ground will fall too
+            this.grndGrp[i].shapeColor = "orange";
 
-            this.players[i].collide(this.obsGrp,()=>{this.players[i].velocityX = 0;});
+            //Player collisions
+            this.players[i].collide(this.obsGrp, () => { this.players[i].velocityX = 0; });
             this.players[i].collide(this.grndGrp);
+            //Gravity
             this.players[i].velocityY += 0.5;
-            this.players[i].limitSpeed(15);
+            //Limiting total scalar speed
+            this.players[i].limitSpeed(10);
 
-            this.players[i].shapeColor = "blue";
-
-            if(this.players[i].position.x > MAXDIST){
-                game.updateGameState(0);
+            //Condition to end the game
+            if (this.players[i].position.x > MAXDIST) {
+                game.updateGameState(2);
                 game.endGame();
-                this.players[this.index-1].velocityX = 0;
+                this.players[this.index - 1].velocityX = 0;
                 return 0;
             }
         }
-        this.players[this.index-1].shapeColor = "red";
 
-        for (let i = 0; i < this.obsGrp.length; i++)
-            this.obsGrp[i].update();
-
-        if (keyDown("d")) {
+        //User controls
+        if (keyDown("d")) 
             this.players[this.index - 1].velocityX += 0.5;
-        }
-        if (keyDown("a")) {
+        if (keyDown("a")) 
             this.players[this.index - 1].velocityX -= 0.5;
-        }
-        if (keyDown("w") && this.grndGrp[this.index - 1].position.y -this.players[this.index - 1].position.y < 60) {
-            this.players[this.index - 1].velocityY = -10;
-        }
+        if (keyDown("w") && this.grndGrp[this.index - 1].position.y - this.players[this.index - 1].position.y < 60)
+            this.players[this.index - 1].velocityY = -5;
         drawSprites();
 
         //Finish line
-        image(this.images[0],MAXDIST + 20,0,100,height);
+        image(this.images[0], MAXDIST + 20, 0, 100, height);
     }
+    //Update functions
     updatePlayerCount(count) {
         database.ref('/').update({
             playerCount: count
         });
     }
     updatePlayerInfo() {
-        if (this.index === null)
+        if (this.index === null) {
             this.index = playerCount;
+            this.players[this.index - 1].addAnimation("athlete", spriteanim);
+        }
         let data = {
             index: this.index,
             name: this.name,
             distance: this.distance,
+            character: this.character
         };
         database.ref('players/player' + this.index).set(data);
     }
