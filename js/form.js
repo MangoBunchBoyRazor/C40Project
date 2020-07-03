@@ -5,19 +5,6 @@ class Form{
        this.msg2;
        this.nameInput;
        this.btn;
-       this.changebtn1;
-       this.changebtn2;
-
-       this.restart = createButton('restart');
-       this.restart.position(width-200,10);
-       this.restart.mousePressed(()=>{
-           game.updateGameState(0);
-           game.endGame();
-           player.updatePlayerCount(0);
-           player.distance = 0;
-           database.ref('/').update({players: null});
-           form.createElements();
-       })
 
        this.createElements();
     }
@@ -50,12 +37,6 @@ class Form{
             }
             return null;
         });
-        this.changebtn1 = createButton('>');
-        this.changebtn1.position(300,93);
-        this.changebtn1.mousePressed(()=>player.character++);
-        this.changebtn2 = createButton('<');
-        this.changebtn2.position(105,93);
-        this.changebtn2.mousePressed(()=>player.character--);
     }
     removeElements(){
         this.title.remove();
@@ -63,15 +44,11 @@ class Form{
         this.msg2.remove();
         this.nameInput.remove();
         this.btn.remove();
-        this.changebtn1.remove();
-        this.changebtn2.remove();
 
         this.title = null;
         this.msg = null;
         this.msg2 = null;
         this.nameInput = null;
         this.btn = null;
-        this.changebtn1 = null;
-        this.changebtn2 = null;
     }
 }

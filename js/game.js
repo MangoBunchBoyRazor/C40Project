@@ -10,19 +10,9 @@ class Game {
             player.play();
         }
         if (this.gamestate == 0 && form.title) {
-            form.restart.elt.disabled = true;
-            animation(animation1[player.character], 200, 200);
-            animation(spriteanim[player.character], 300, 300);
-            if(player.character == 0){
-                form.changebtn2.elt.disabled = true;
-                form.changebtn1.elt.disabled = false;
-            }else{
-                form.changebtn1.elt.disabled = true;
-                form.changebtn2.elt.disabled = false;
-            }
+            animation(animation1[0], 200, 200);
+            animation(spriteanim[0], 300, 300);
         }
-        else
-            form.restart.elt.disabled = false;
         if(this.gamestate == 2)
             this.endGame();      
     }
@@ -40,7 +30,7 @@ class Game {
 
         for( let i = 0; i < player.players.length; i++){
             player.players[i].position.y = height/4 * i + 20;
-            player.players[i].addAnimation("athlete",spriteanim[player.playerData["player"+(i+1)].character]);
+            player.players[i].addAnimation("athlete",spriteanim[playerData["player"+(i+1)].character]);
             player.players[i].setCollider("circle");
         }
 

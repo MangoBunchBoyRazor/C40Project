@@ -71,7 +71,7 @@ class Player {
             index: this.index,
             name: this.name,
             distance: this.distance,
-            character: this.character
+            character: 0
         };
         database.ref('players/player' + this.index).set(data);
     }
