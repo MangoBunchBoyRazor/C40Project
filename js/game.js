@@ -10,9 +10,19 @@ class Game {
             player.play();
         }
         if (this.gamestate == 0 && form.title) {
-            animation(animation1[0], 200, 200);
-            animation(spriteanim[0], 300, 300);
+            form.restart.elt.disabled = true;
+            animation(animation1[player.character], 200, 200);
+            animation(spriteanim[player.character], 300, 300);
+            if(player.character == 0){
+                form.changebtn2.elt.disabled = true;
+                form.changebtn1.elt.disabled = false;
+            }else{
+                form.changebtn1.elt.disabled = true;
+                form.changebtn2.elt.disabled = false;
+            }
         }
+        else
+            form.restart.elt.disabled = false;
         if(this.gamestate == 2)
             this.endGame();      
     }

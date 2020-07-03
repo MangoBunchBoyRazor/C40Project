@@ -50,7 +50,7 @@ class Player {
         if (keyDown("a")) 
             this.players[this.index - 1].velocityX -= 0.5;
         if (keyDown("w") && this.grndGrp[this.index - 1].position.y - this.players[this.index - 1].position.y < 60)
-            this.players[this.index - 1].velocityY = -5;
+            this.players[this.index - 1].velocityY = -5.5;
         drawSprites();
 
         //Finish line
@@ -71,7 +71,7 @@ class Player {
             index: this.index,
             name: this.name,
             distance: this.distance,
-            character: 0
+            character: this.character
         };
         database.ref('players/player' + this.index).set(data);
     }
