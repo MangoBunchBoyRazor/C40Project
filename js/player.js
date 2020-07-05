@@ -27,6 +27,17 @@ class Player {
             this.grndGrp[i].position.y = (height / 4) * i + 110; //Setting the ground position else ground will fall too
             this.grndGrp[i].shapeColor = "orange";
 
+            textSize(20);
+            textAlign(CENTER);
+            fill(255);
+            if (i == this.index - 1) {
+                ellipse(this.players[i].x, this.players[i].y, 25, 25);
+                text("You", this.players[i].x, this.players[i].y - 40);
+            }
+            else {
+                text("" + playerData["player" + (i + 1)].name, this.players[i].x, this.players[i].y - 40);
+            }
+
             //Player collisions
             this.players[i].collide(this.obsGrp, () => { this.players[i].velocityX = 0; });
             this.players[i].collide(this.grndGrp);
@@ -45,9 +56,9 @@ class Player {
         }
 
         //User controls
-        if (keyDown("d")) 
+        if (keyDown("d"))
             this.players[this.index - 1].velocityX += 0.5;
-        if (keyDown("a")) 
+        if (keyDown("a"))
             this.players[this.index - 1].velocityX -= 0.5;
         if (keyDown("w") && this.grndGrp[this.index - 1].position.y - this.players[this.index - 1].position.y < 60)
             this.players[this.index - 1].velocityY = -5.5;
